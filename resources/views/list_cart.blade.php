@@ -65,8 +65,18 @@
         align-content: center;
         justify-content: center;
     }
-    .header span {
-        margin-left: 30px;
+
+
+    table td {
+        text-align: center;
+        padding: 15px;
+    }
+    table tr{
+        border: solid 2px #000;
+        background-color: #999;
+    }
+    table tr:nth-child(even) {
+        background-color: #ccc;
     }
 </style>
 
@@ -88,27 +98,34 @@
             <a href="{{ route('user_logout') }}">Sair</a>
         @endif
 
-        <span>{{ session()->has('cart') ? session()->get('cart')->totalQnt : '' }}</span>
-        <span><a href="{{route('listCart')}}">List Cart</a></span>
 
     </div>
-    <div class="stock">
-     @foreach ($movies as $movie)
-        <div class="movie">
-            <h1>{{$movie->name}}</h1>
-            <img src="{{$movie->image}}" alt="{{$movie->name}}">
-            <span>{{$movie->genre}}</span>
-            <h4>{{$movie->info}}</h4>
+    <table class="table">
+        <thead>
+            <td>Quantidade</td>
+            <td>Nome</td>
+            <td>ano</td>
+            <td>Remover</td>
+        </thead>
 
-            <span class="disponibilidade">
-               {{ ($movie->available <= 0) ? "Não disponível" : "" }}
-            </span>
-        <button {{ ($movie->available <= 0) ? "disabled" : "" }} ><a href="{{ ($movie->available <= 0) ? "#" : route('addToCar', $movie->id) }}" >Alugar</a></button>
-
-        </div>
-
+    @foreach (session()->get('cart')->items as $movie)
+        <tr>
+            {{-- {{dd($movie)}} --}}
+            <td>{{ $movie['qnt'] }}</td>
+            <td>{{ $movie['item']['name'] }}</td>
+            <td>{{ $movie['item']['year'] }}</td>
+            <td><a href="{{ route('removeOfCart', $movie['item']['id'])}}">Remover</a></td>
+        </tr>
     @endforeach
-    </div>
+    </table>
+    <table style="margin-left: 20px!important">
+        <tr >
+            <td>TOTAL:</td>
+            <td>{{session()->get('cart')->totalQnt}} filmes</td>
+            <td>Finalizar pedido</td>
+        </tr>
+    </table>
+
 </body>
 
 @if(session()->has('message'))

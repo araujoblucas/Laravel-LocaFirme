@@ -64,9 +64,7 @@
         align-self: center;
         align-content: center;
         justify-content: center;
-    }
-    .header span {
-        margin-left: 30px;
+
     }
 </style>
 
@@ -88,10 +86,28 @@
             <a href="{{ route('user_logout') }}">Sair</a>
         @endif
 
-        <span>{{ session()->has('cart') ? session()->get('cart')->totalQnt : '' }}</span>
-        <span><a href="{{route('listCart')}}">List Cart</a></span>
 
     </div>
+    <table class="table">
+        <thead>
+            <td>Id do Filme</td>
+            <td>Nome</td>
+            <td>ano</td>
+            <td>Quantidade</td>
+            <td>Disponíveis</td>
+            <td>Editar</td>
+        </thead>
+
+    @foreach ($movies as $movie)
+        <tr>
+            <td>{{ $movie->movie_id }}</td>
+            <td>{{ $movie->name }}</td>
+            <td>{{ $movie->year }}</td>
+            <td>{{ $movie->qnt }}</td>
+            <td>{{ $movie->available }}</td>
+            <td><a href="{{route('updateMovieView', $movie->movie_id)}}">Editar</a>
+        </tr>
+    </table>
     <div class="stock">
      @foreach ($movies as $movie)
         <div class="movie">
@@ -103,16 +119,17 @@
             <span class="disponibilidade">
                {{ ($movie->available <= 0) ? "Não disponível" : "" }}
             </span>
-        <button {{ ($movie->available <= 0) ? "disabled" : "" }} ><a href="{{ ($movie->available <= 0) ? "#" : route('addToCar', $movie->id) }}" >Alugar</a></button>
-
+            <button {{ ($movie->available <= 0) ? "disabled" : "" }} onClick="alert('Olá');" >Alugar</button>
         </div>
 
     @endforeach
     </div>
+    <script type="javascript">
+        var btn = document.querySelector('button');
+        btn.onclick = function() {
+            alert("olá");
+        }
+    </script>
+
 </body>
 
-@if(session()->has('message'))
-    <script>
-        alert( "{{ session()->pull('message') }}");
-    </script>
-@endif
