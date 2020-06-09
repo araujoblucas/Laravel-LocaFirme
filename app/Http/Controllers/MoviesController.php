@@ -6,23 +6,31 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\movie;
 use App\cart;
-use Illuminate\Contracts\Session\Session;
+use App\likes;
+
 
 class MoviesController extends Controller
 {
     public function index() {
+        $movies = DB::table('movies')
+        ->join('stock', 'movies.id', '=', 'stock.movie_id')
+        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        $likes = array();
         if (Auth::check()) {
             $dados = auth()->user()->name;
+            $allLikes = DB::table('likes')
+            ->where('user_id', '=', auth()->user()->id)
+            ->select('movie_id')->get();
+
+            foreach ($allLikes as $like) {
+                $likes[] = $like->movie_id;
+            }
         } else {
             $dados = "Visitante";
         }
 
 
-        $movies = DB::table('movies')
-        ->join('stock', 'movies.id', '=', 'stock.movie_id')
-        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
-
-        return view('index', ['movies' => $movies, 'dados' => $dados]);
+        return view('index', ['movies' => $movies, 'dados' => $dados, 'user_likes' => $likes]);
     }
 
     public function postLogin(Request $request) {
@@ -72,5 +80,50 @@ class MoviesController extends Controller
         session()->put('message', "Removido com sucesso ao carrinho!");
         return redirect()->route('listCart');
     }
+    public function buy_cart(){
+        if (Auth::check()) {
+            $dados = auth()->user()->name;
+        } else {
+            $dados = "Visitante";
+        }
+        return view('buy_cart', ['dados' => $dados]);
+    }
 
+    public function giveLike($movie_id){
+        $user_id = auth()->user()->id;
+        $like = DB::table('likes')
+        ->where([
+            ['movie_id', '=', $movie_id],
+            ['user_id', '=', $user_id],
+            ]
+        )->exists();
+
+        if( $like ) {
+            return redirect()->route('home');
+        }
+
+        $like_id = DB::table('likes')->insertGetId(
+                [
+                 'movie_id' => $movie_id,
+                 'user_id' => $user_id,
+                ]
+            );
+            session()->put('message', "Filme curtido!");
+            return redirect()->route('home');
+        }
+
+    public function removeLike($movie_id){
+        $user_id = auth()->user()->id;
+
+        DB::table('likes')
+        ->where([
+            ['movie_id', '=', $movie_id],
+            ['user_id', '=', $user_id],
+            ]
+        )->delete();
+
+        session()->put('message', "Filme descurtido!");
+        return redirect()->route('home');
+    }
 }
+

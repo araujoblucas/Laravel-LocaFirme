@@ -16,9 +16,11 @@ class userAuth
     public function handle($request, Closure $next)
     {
 
-
-
-
+        if(!Auth::check()) {
+            session()->put('message', "Você precisa estar logado para fazer isso");
+            return redirect()->route('index');
+        }
         return $next($request);
+
     }
 }

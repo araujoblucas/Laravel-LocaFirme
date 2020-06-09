@@ -103,36 +103,7 @@
 
 
     </div>
-    @if( session()->has('cart') )
-        <table class="table">
-            <thead>
-                <td>Quantidade</td>
-                <td>Nome</td>
-                <td>ano</td>
-                <td>Remover</td>
-            </thead>
-
-        @foreach (session()->get('cart')->items as $movie)
-            <tr>
-                {{-- {{dd($movie)}} --}}
-                <td>{{ $movie['qnt'] }}</td>
-                <td>{{ $movie['item']['name'] }}</td>
-                <td>{{ $movie['item']['year'] }}</td>
-                <td><a href="{{ route('removeOfCart', $movie['item']['id'])}}">Remover</a></td>
-            </tr>
-        @endforeach
-        </table>
-        <table style="margin-left: 20px!important">
-            <tr >
-                <td>TOTAL:</td>
-                <td>{{session()->get('cart')->totalQnt}} filmes</td>
-                <td><a href="{{route('buy_cart')}}">Finalizar pedido</td>
-            </tr>
-        </table>
-    @else
-        <h1>Não há itens no carrinho</h1>
-    @endif
-
+        Logado e alugado
 </body>
 
 @if(session()->has('message'))

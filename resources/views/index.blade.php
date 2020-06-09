@@ -68,6 +68,16 @@
     .header span {
         margin-left: 30px;
     }
+
+    .imgLike {
+        opacity: 0.3;
+        width:32px !important;
+        height:32px !important;
+        border: solid #000 2px;
+    }
+    .active {
+        opacity: 1;
+    }
 </style>
 
 
@@ -77,18 +87,19 @@
     <div class="header">
         Bem vindo {{ $dados }},
 
-        @if ($dados === "Visitante")
+        @guest
             <form class="login" method="POST" action="{{ route('user_login') }}">
                 <input type="text" name="email" placeholder="Usuario">
                 <input type="text" name="password" placeholder="Senha">
                 <button type="submit">Entrar</button>
             </form>
-        @else
+        @endguest
+        @auth
             <a href="">Alugados</a>
             <a href="{{ route('user_logout') }}">Sair</a>
-        @endif
+        @endauth
 
-        <span>{{ session()->has('cart') ? session()->get('cart')->totalQnt : '' }}</span>
+        <span>{{ session()->has('cart') and session()->get('cart')->totalQnt > 0 ? session()->get('cart')->totalQnt : '' }}</span>
         <span><a href="{{route('listCart')}}">List Cart</a></span>
 
     </div>
@@ -103,7 +114,23 @@
             <span class="disponibilidade">
                {{ ($movie->available <= 0) ? "Não disponível" : "" }}
             </span>
-        <button {{ ($movie->available <= 0) ? "disabled" : "" }} ><a href="{{ ($movie->available <= 0) ? "#" : route('addToCar', $movie->id) }}" >Alugar</a></button>
+            @if($movie->available > 0)
+            <button><a href="{{ ($movie->available <= 0) ? "#" : route('addToCar', $movie->id) }}" >Alugar</a></button>
+        @endif
+        {{ $like = false}}
+        @foreach ($user_likes as $user_like)
+            @if ($user_like == $movie->id )
+                @php $like = true @endphp
+            @endif
+        @endforeach
+
+        <a href="
+        {{ $like ? route('removeLike', $movie->id) : route('giveLike', $movie->id)}} ">
+            <img class="imgLike
+                {{ $like ? 'active' : '' }}
+            " src="https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-like-icon-png-image_4013523.jpg">
+        </a>
+
 
         </div>
 

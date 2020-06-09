@@ -13,12 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/index', 'MoviesController@index')->name('home');
+
+        // ROTAS DO USUÁRIO
+    Route::prefix('user')->group(function () {
+        Route::get('/login', 'userController@login')->name('userLogin');
+        Route::get('/register', 'userController@register')->name('userRegister');
+        Route::post('/register', 'userController@registerPost')->name('userRegisterPost');
+        Route::get('/profile', 'userController@profile')->name('userProfile');
+        Route::get('/logout', 'userController@logout')->name('user_logout');
+    });
+
+
+Route::get('/', 'MoviesController@index')->name('home');
 Route::post('/login', 'MoviesController@postLogin')->name('user_login');
-Route::get('/logout', 'MoviesController@logout')->name('user_logout');
+//Route::get('/logout', 'MoviesController@logout')->name('user_logout');
 Route::get('/addToCar/{id}', 'MoviesController@addToCar')->name('addToCar');
 Route::get('/cart', 'MoviesController@listCart')->name('listCart');
 Route::get('/removeCart/{id}', 'MoviesController@removeCart')->name('removeOfCart');
+Route::get('/buy_cart', 'MoviesController@buy_cart')->middleware('userAuth')->name('buy_cart');
+Route::get('/login/like/{id}', 'MoviesController@giveLike')->middleware('userAuth')->name('giveLike');
+Route::get('/login/removeLike/{id}', 'MoviesController@removeLike')->middleware('userAuth')->name('removeLike');
 Route::prefix('admin')->group(function () {
     Route::get('/create', 'adminController@createView')->name('createMovieView');
     Route::post('/create', 'adminController@create')->name('createMovie');
