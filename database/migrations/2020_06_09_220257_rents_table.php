@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Rent extends Migration
+class RentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,8 +17,9 @@ class Rent extends Migration
             $table->id();
             $table->foreignId('movie_id')->constrained('movies')->unique();
             $table->foreignId('user_id')->constrained('users')->unique();
-            $table->integer('active');
-            $table->integer('rented');
+            $table->string('status');
+            $table->date('rentDate');
+            $table->date('returnDate');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class Rent extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rents');
+
     }
 }

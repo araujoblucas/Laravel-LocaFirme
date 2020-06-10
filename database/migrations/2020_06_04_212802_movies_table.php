@@ -20,6 +20,7 @@ class MoviesTable extends Migration
             $table->string('image');
             $table->longText('genre');
             $table->integer('year');
+            $table->integer('likes');
             $table->timestamps();
         });
     }

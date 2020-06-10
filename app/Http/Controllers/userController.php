@@ -43,6 +43,18 @@ class userController extends Controller
         return redirect()->route('userLogin');
     }
 
+    public function userUpdate(Request $request, $id){
+        $affected = DB::table('users')->where('id', '=', $id)->update(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ],
+        );
+
+        return redirect()->route('userProfile');
+    }
+
     public function profile() {
         if (Auth::check()) {
             $userName = auth()->user()->name;
@@ -54,8 +66,17 @@ class userController extends Controller
             ->where('likes.user_id', '=', auth()->user()->id)
             ->select('movies.*')->get();
 
+        $rents = DB::table('rents')
+            ->join('movies', 'rents.movie_id', '=', 'movies.id' )
+            ->where('rents.user_id', '=', auth()->user()->id)
+            ->select('movies.*', 'rents.*')->get();
 
-        return view('user.profile', ['userName' => $userName, 'likedMovies' => $likedMovies]);
+
+        return view('user.profile', [
+            'userName' => $userName,
+            'likedMovies' => $likedMovies,
+            'rents' => $rents
+            ]);
 
     }
 }

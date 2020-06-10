@@ -17,7 +17,7 @@ class MoviesController extends Controller
         ->select('movies.*', 'stock.qnt', 'stock.available')->get();
         $likes = array();
         if (Auth::check()) {
-            $dados = auth()->user()->name;
+            $userName = auth()->user()->name;
             $allLikes = DB::table('likes')
             ->where('user_id', '=', auth()->user()->id)
             ->select('movie_id')->get();
@@ -26,11 +26,14 @@ class MoviesController extends Controller
                 $likes[] = $like->movie_id;
             }
         } else {
-            $dados = "Visitante";
+            $userName = "Visitante";
         }
 
 
-        return view('index', ['movies' => $movies, 'dados' => $dados, 'user_likes' => $likes]);
+        return view('index', [
+            'movies' => $movies,
+            'userName' => $userName,
+            'user_likes' => $likes]);
     }
 
     public function postLogin(Request $request) {
@@ -108,6 +111,8 @@ class MoviesController extends Controller
                  'user_id' => $user_id,
                 ]
             );
+            DB::table('movies')->where('id', '=', $movie_id)->increment('likes');
+
             session()->put('message', "Filme curtido!");
             return redirect()->route('home');
         }
@@ -122,8 +127,14 @@ class MoviesController extends Controller
             ]
         )->delete();
 
+        DB::table('movies')->where('id', '=', $movie_id)->decrement('likes');
+
         session()->put('message', "Filme descurtido!");
-        return redirect()->route('home');
+        return redirect()->back();
+    }
+    public function forgetCart () {
+        session()->forget('cart');
+        return redirect()->back();
     }
 }
 
