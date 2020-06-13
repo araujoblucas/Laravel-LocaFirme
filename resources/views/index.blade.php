@@ -1,8 +1,9 @@
 
 
+
     @component('layouts.header', [
         'userName' => $userName,
-        'title' => "Página Inicial"
+        'title' => $title
     ])
     @endcomponent
     <div class="containerFlex">

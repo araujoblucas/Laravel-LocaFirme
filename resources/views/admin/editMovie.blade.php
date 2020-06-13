@@ -1,27 +1,59 @@
-<!DOCTYPE html>
-<head>
 
-    <title>Editar</title>
-</head>
+    @component('layouts.headerAdmin',
+    [
+        'title' => $title,
+        'userName' => $userName
+    ])
+    @endcomponent
 
-<body>
+    <div class="containerCreateMovie">
+        <h1>Editar Filme:</h1>
+        <form method="POST" action="{{ route('updateMovie', $movie->id) }}">
+            <fieldset>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="name">Nome</label>
+                        <input type="text" class="form-control" value="{{ $movie->name }}" name="name" placeholder="Insira o nome do filme">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="exampleInputEmail1">Sinopse</label>
+                        <textarea class="form-control" name="info"  style="resize: vertical !important;" rows="3">{{ $movie->info }}</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label for="image">Imagem</label>
+                        <input type="text" class="form-control" value="{{ $movie->image }}" name="image" placeholder="Insira o link da imagem">
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="genre">Genero</label>
+                        <input type="text" class="form-control" value="{{ $movie->genre }}" name="genre" placeholder="Insira os seus generos separados por ',' aqui">
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="year">Estréia</label>
+                        <input type="text" class="form-control" value="{{ $movie->year }}" name="year" placeholder="Insira o ano de lançamento aqui">
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label for="quantidade">Estoque</label>
+                        <input type="text" class="form-control" value="{{ $movie->qnt }}" name="qnt" placeholder="Insira a quantidade no estoque">
+                    </div>
+                </div>
+                <div class="box-actions">
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
 
-    <h1> Editar </h1>
-    <form method="post" action="{{ route('updateMovie', $movie->id ) }}">
-        {{ method_field('PUT') }}
-        <h1>Filme:</h1>
-        <input name="name" value="{{ $movie->name }}" />
-        <input name="info" value="{{ $movie->info }}" />
-        <input name="image" value="{{ $movie->image }}" />
-        <input name="genre" value="{{ $movie->genre }}" />
-        <input name="year" value="{{ $movie->year }}" />
-
-        <h1>Estoque:</h1>
-        <input name="qnt" value="{{ $movie->qnt }}" />
-        <button type="submit">Adicionar</button>
-
-    </form>
+<style>
+    .containerCreateMovie {
+        width: 60vw;
+        margin-left: 20vw;
+        margin-top: 5vh;
 
 
+    }
+</style>
 
 </body>

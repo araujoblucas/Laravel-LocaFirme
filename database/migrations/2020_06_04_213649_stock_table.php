@@ -15,7 +15,7 @@ class StockTable extends Migration
     {
         Schema::create('stock', function ($table) {
             $table->id();
-            $table->foreignId('movie_id')->constrained('movies')->unique();
+            $table->foreignId('movie_id')->constrained('movies')->unique()->onDelete('cascade');
             $table->integer('qnt');
             $table->integer('available');
             $table->integer('rented');

@@ -12,17 +12,22 @@
     <title>Login</title>
 </head>
 <body>
+    <form method="get" action="{{ route('home') }}">
+        <button class="btn  ico-direction-left ico-pos-left" style="position: absolute; left:30px; top:30px" type="submit">Voltar</button>
+    </form>
     <div class="container">
-        <div class="box-parent-login">
+
+        <div class="box-parent-login" style="width:40vw">
             <div class="well bg-white box-login">
-                <h1 class="ls-login-logo">LocaFirme</h1>
-                <form method="POST" action="{{ route('user_login') }}">
+                <h1 class="ls-login-logo">LocaFirmeAdmin
+                </h1>
+                <form method="POST" action="{{ route('adminLoginPost') }}">
                     <fieldset>
 
                         @if (session()->has('message'))
-                            <div class="alert alert-success alert-dismissable">
+                            <div class="alert alert-warning alert-dismissable">
                                 <a href="#" class="close" data-dismiss="alert" aria-hidden="true">×</a>
-                                <p><strong>Sucesso!</strong> {{ session()->pull('message') }} </a></p>
+                                <p><strong>Deu ruim!</strong> {{ session()->pull('message') }} </a></p>
                             </div>
                         @endif
 
@@ -37,9 +42,6 @@
                         </div>
 
                         <input type="submit" value="Entrar" class="btn btn-primary btn-lg btn-block">
-                        <p class="txt-center ls-login-signup">Não possui um usuário na LocaFirme?
-                            <a href="{{ route('userRegister') }}">Cadastre-se agora</a>
-                        </p>
 
                     </fieldset>
                 </form>

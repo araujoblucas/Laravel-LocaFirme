@@ -31,6 +31,7 @@ class MoviesController extends Controller
 
 
         return view('index', [
+            'title' => "Página Inicial",
             'movies' => $movies,
             'userName' => $userName,
             'user_likes' => $likes]);
@@ -65,11 +66,11 @@ class MoviesController extends Controller
 
     public function listCart(Request $request){
         if (Auth::check()) {
-            $dados = auth()->user()->name;
+            $userName = auth()->user()->name;
         } else {
-            $dados = "Visitante";
+            $userName = "Visitante";
         }
-        return view('list_cart', ['dados' => $dados]);
+        return view('list_cart', ['userName' => $userName]);
     }
 
     public function removeCart(Request $request, $id){
@@ -135,6 +136,116 @@ class MoviesController extends Controller
     public function forgetCart () {
         session()->forget('cart');
         return redirect()->back();
+    }
+
+    public function moreLikesPage() {
+        $movies = DB::table('movies')
+        ->orderBy('likes', 'desc')
+        ->join('stock', 'movies.id', '=', 'stock.movie_id')
+        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        $likes = array();
+        if (Auth::check()) {
+            $userName = auth()->user()->name;
+            $allLikes = DB::table('likes')
+            ->where('user_id', '=', auth()->user()->id)
+            ->select('movie_id')->get();
+
+            foreach ($allLikes as $like) {
+                $likes[] = $like->movie_id;
+            }
+        } else {
+            $userName = "Visitante";
+        }
+
+
+        return view('index', [
+            'title' => "Mais curtidos",
+            'movies' => $movies,
+            'userName' => $userName,
+            'user_likes' => $likes]);
+    }
+
+    public function comedyMoviesPage() {
+        $movies = DB::table('movies')
+        ->orderBy('likes', 'desc')
+        ->join('stock', 'movies.id', '=', 'stock.movie_id')
+        ->where('genre', 'like', '%comedy%')
+        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        $likes = array();
+        if (Auth::check()) {
+            $userName = auth()->user()->name;
+            $allLikes = DB::table('likes')
+            ->where('user_id', '=', auth()->user()->id)
+            ->select('movie_id')->get();
+
+            foreach ($allLikes as $like) {
+                $likes[] = $like->movie_id;
+            }
+        } else {
+            $userName = "Visitante";
+        }
+
+
+        return view('index', [
+            'title' => "Filmes de Comédia",
+            'movies' => $movies,
+            'userName' => $userName,
+            'user_likes' => $likes]);
+    }
+
+
+    public function horrorMoviesPage() {
+        $movies = DB::table('movies')->orderBy('likes', 'desc')
+        ->join('stock', 'movies.id', '=', 'stock.movie_id')
+        ->where('genre', 'like', '%horror%')
+        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        $likes = array();
+        if (Auth::check()) {
+            $userName = auth()->user()->name;
+            $allLikes = DB::table('likes')
+            ->where('user_id', '=', auth()->user()->id)
+            ->select('movie_id')->get();
+
+            foreach ($allLikes as $like) {
+                $likes[] = $like->movie_id;
+            }
+        } else {
+            $userName = "Visitante";
+        }
+
+
+        return view('index', [
+            'title' => "Filmes de Terror",
+            'movies' => $movies,
+            'userName' => $userName,
+            'user_likes' => $likes]);
+    }
+    public function suspenseMoviesPage() {
+        $movies = DB::table('movies')
+        ->orderBy('likes', 'desc')
+        ->join('stock', 'movies.id', '=', 'stock.movie_id')
+        ->where('genre', 'like', '%suspense%')
+        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        $likes = array();
+        if (Auth::check()) {
+            $userName = auth()->user()->name;
+            $allLikes = DB::table('likes')
+            ->where('user_id', '=', auth()->user()->id)
+            ->select('movie_id')->get();
+
+            foreach ($allLikes as $like) {
+                $likes[] = $like->movie_id;
+            }
+        } else {
+            $userName = "Visitante";
+        }
+
+
+        return view('index', [
+            'title' => "Filmes de Suspense",
+            'movies' => $movies,
+            'userName' => $userName,
+            'user_likes' => $likes]);
     }
 }
 

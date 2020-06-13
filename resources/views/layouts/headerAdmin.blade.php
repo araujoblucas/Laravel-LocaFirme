@@ -22,9 +22,9 @@
 
     @auth
         <div class="dropdown hidden-xs">
-            <a href="" data-toggle="dropdown" style="text-transform: capitalize" class="title-b ico-user">{{ $userName }}</a>
+            <a href="#" data-toggle="dropdown" style="text-transform: capitalize" class="title-b ico-user">{{ $userName }}</a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li><a href="{{route('userProfile')}}" role="menuitem">Editar Perfil</a></li>
+                <li><a href="#" role="menuitem">Editar Perfil</a></li>
                 <li><a href="{{ route('user_logout') }}" role="menuitem">Sair</a></li>
             </ul>
         </div>
@@ -42,23 +42,14 @@
 <div class="nav-content">
     <menu class="menu">
         <ul class="container">
-            <li><a href="{{route('listCart')}}" class="active ico-cart" role="menuitem">{{ session()->has('cart') ? session()->get('cart')->totalQnt : '' }}</a>
+            <li><a href="{{ route('indexMovieView') }}">Filmes</a>
                 <ul>
-                    <li><a href="{{route('listCart')}}">Ver Carrinho</a></li>
-                    <li><a href="{{ route('forgetCart') }}">Largar Carrinho</a></li>
+                    <li><a href="{{route('createMovieView')}}">Adicionar</a></li>
+                    <li><a href="{{route('indexMovieView')}}">Listar</a></li>
                 </ul>
             </li>
-            <li><a href="{{ route('home') }}">Home</a></li>
-            <li><a href="{{ route('moreLikesPage')}}">Mais Curtidos</a></li>
-            <li><a href="#">Categorias</a>
-                <ul>
-                    <li><a href="{{route('comedyMoviesPage')}}">Comédia</a></li>
-                    <li><a href="{{route('suspenseMoviesPage')}}">Suspense</a></li>
-                    <li><a href="{{ route('horrorMoviesPage') }}">Terror</a></li>
-                </ul>
-            </li>
-
-            <li><a href="{{ route('adminLogin') }}">Parceiros</a></li>
+            <li><a href="{{ route('listLikes')}}">Likes</a></li>
+            <li><a href="{{ route('listUsers') }}">Usuários</a></li>
         </ul>
     </menu>
 </div>

@@ -30,6 +30,7 @@ class userController extends Controller
             [
                 'name' => $request->name,
                 'email' => $request->email,
+                'role' => 'user',
                 'password' => Hash::make($request->password),
             ],
         );
@@ -56,6 +57,7 @@ class userController extends Controller
     }
 
     public function profile() {
+
         if (Auth::check()) {
             $userName = auth()->user()->name;
         } else {
@@ -70,7 +72,6 @@ class userController extends Controller
             ->join('movies', 'rents.movie_id', '=', 'movies.id' )
             ->where('rents.user_id', '=', auth()->user()->id)
             ->select('movies.*', 'rents.*')->get();
-
 
         return view('user.profile', [
             'userName' => $userName,

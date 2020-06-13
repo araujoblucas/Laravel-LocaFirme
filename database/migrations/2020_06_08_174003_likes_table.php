@@ -15,8 +15,8 @@ class LikesTable extends Migration
     {
         Schema::create('likes', function ($table) {
             $table->id();
-            $table->foreignId('movie_id')->constrained('movies')->unique();
-            $table->foreignId('user_id')->constrained('users')->unique();
+            $table->foreignId('movie_id')->constrained('movies')->unique()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->unique()->onDelete('cascade');
             $table->timestamps();
         });
     }

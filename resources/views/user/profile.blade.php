@@ -23,11 +23,10 @@
                         <header class="ls-list-header">
                             <div class="ls-group-actions">
 
-
-                                @if( $rent->status === "devolvido" )
-                                    <a href="#" class="btn btn-primary f-left">Devolvido</a>
-                                @elseif( $rent->status === "alugado" )
-                                    <a href="#" class="btn btn-success f-left">Alugado</a>
+                                @if( strtolower($rent->status) == "devolvido" )
+                                    <a href="" class="btn btn-primary f-left">Devolvido</a>
+                                @elseif( strtolower($rent->status) == "alugado" )
+                                    <a href="" class="btn btn-success f-left">Alugado</a>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <span class="sr-only">Toggle Dropdown</span>
@@ -35,7 +34,7 @@
                                     <ul class="dropdown-menu pull-right" role="menu">
                                         <li><a href="#">Assistir</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#" class="color-danger">Devolver</a></li>
+                                        <li><a href="{{ route('returnMovie', $rent->id) }}" class="color-danger">Devolver</a></li>
                                     </ul>
                                 </div>
                                 @endif
@@ -49,11 +48,11 @@
                         <div class="ls-list-content ">
                             <div class="col-xs-6 col-md-6">
                                 <strong class="ls-list-label">Data de locação:</strong>
-                                {{ date('d/M/Y', strtotime($rent->rentDate)) }}
+                                {{ date('Y-M-d', strtotime($rent->rentDate)) }}
                             </div>
                             <div class="col-xs-6 col-md-6">
                                 <strong class="ls-list-label">Data de devolução:</strong>
-                                {{ date('d/M/Y', strtotime($rent->returnDate)) }}
+                                {{ date('Y-M-d', strtotime($rent->returnDate)) }}
                             </div>
                         </div>
                     </div>
