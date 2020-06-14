@@ -41,7 +41,9 @@ class MoviesController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->route('home');
         } else {
-            return redirect()->route('home');
+            session()->put('messageType', 'erro');
+            session()->put('message', 'Tem coisa errada aí, confere tua senha e email.');
+            return redirect()->route('userLogin');
         }
     }
 

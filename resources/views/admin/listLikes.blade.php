@@ -7,15 +7,24 @@
     @endcomponent
 
     @if(session()->has('message'))
-    <div class="container" style="margin-top: 15px">
-        @if(session()->get('messageType') == "erro")
-            <div class="alert alert-danger">{{ session()->pull('message') }}</div>
-        @elseif(session()->get('messageType') == "aviso")
-            <div class="alert alert-warning"><b>Puxa vida!</b> {{ session()->pull('message') }}</div>
-        @else
-            <div class="alert alert-success"><b>Aí sim!</b> {{ session()->pull('message') }}</div>
-        @endif
-    </div>
+        <div class="container" style="margin-top: 15px">
+            @if(session()->get('messageType') == "erro")
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
+                    <p><strong>Deu ruim!</strong> {{ session()->pull('message') }}</p>
+                </div>
+            @elseif(session()->get('messageType') == "aviso")
+                <div class="alert alert-warning alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
+                    <p><strong>Puxa vida!</strong> {{ session()->pull('message') }}</p>
+                </div>
+            @else
+                <div class="alert alert-success alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
+                    <p><strong>Aí sim!</strong> {{ session()->pull('message') }}</p>
+                </div>
+            @endif
+        </div>
     @php session()->forget('messageType') @endphp
     @endif
 
