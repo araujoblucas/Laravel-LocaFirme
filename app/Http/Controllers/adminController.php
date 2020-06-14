@@ -11,27 +11,28 @@ class adminController extends Controller
 {
 
     public function adminLogin() {
-        if(Auth::check() and auth()->user()->role == "admin")
-            return redirect()->route('indexMovieView');
+        if(Auth::check()){
+            if(auth()->user()->role == "admin"){
+               return redirect()->route('indexMovieView');
+            }
+        }
         return view('admin.login');
     }
 
     public function adminLoginPost(Request $request) {
-        $user = DB::table('users')->where('email', '=', $request->email)->first();
+        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            session()->put('messageType', 'erro');
+            session()->put('message', 'Dados Incorretos');
+            return redirect()->route('adminLogin');
+        }
 
+        $user = DB::table('users')->where('email', '=', $request->email)->first();
         if($user->role != 'admin') {
             session()->put('messageType', 'aviso');
             session()->put('message', 'Você não é um administrador!');
-            return view('admin.login');
+            return redirect()->route('adminLogin');
         }
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('indexMovieView');
-        } else {
-            session()->put('messageType', 'erro');
-            session()->put('message', 'Dados incorretos');
-            return view('admin.login');
-        }
+        return redirect()->route('adminLogin');
     }
 
     public function createView(){
@@ -181,10 +182,21 @@ class adminController extends Controller
     }
 
     public function deleteUser($id){
+        $rents = DB::table('rents')->where('user_id', '=', $id)->get();
+
+        foreach($rents as $rent){
+            DB::table('stock')->where('id', '=', $rent->movie_id)->increment('available');
+            DB::table('stock')->where('id', '=', $rent->movie_id)->decrement('rented');
+        }
+        DB::table('rents')->where('user_id', '=', $id)->update(['status' => 'devolvido']);
+
+        DB::table('likes')->where('user_id', '=', $id)->delete();
+
         $delete = DB::table('users')->where('id', '=', $id)->delete();
         session()->put('messageType', 'sucesso');
-        session()->put('messageType', 'Usuário Deletado!');
+        session()->put('message', 'Usuário Deletado!');
         return redirect()->route('listUsers');
+
     }
 }
 

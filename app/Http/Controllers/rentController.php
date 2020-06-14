@@ -24,6 +24,7 @@ class rentController extends Controller
 
 
         foreach ( $cart as $item) {
+            $count++;
             $stock = DB::table('stock')
                 ->where('movie_id', '=', $item->id)
                 ->first();
@@ -67,7 +68,8 @@ class rentController extends Controller
         DB::table('rents')
             ->where('id', '=', $rentID)
             ->update(['status' => "devolvido"]);
-
+            session()->put('messageType', 'sucesso');
+            session()->put('message', "Devolvido!");
         return redirect()->route('userProfile');
     }
 
