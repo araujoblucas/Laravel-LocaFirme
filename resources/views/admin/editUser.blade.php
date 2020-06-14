@@ -6,6 +6,20 @@
     ])
     @endcomponent
 
+    @if(session()->has('message'))
+    <div class="container" style="margin-top: 15px">
+        @if(session()->get('messageType') == "erro")
+            <div class="alert alert-danger">{{ session()->pull('message') }}</div>
+        @elseif(session()->get('messageType') == "aviso")
+            <div class="alert alert-warning"><b>Puxa vida!</b> {{ session()->pull('message') }}</div>
+        @else
+            <div class="alert alert-success"><b>Aí sim!</b> {{ session()->pull('message') }}</div>
+        @endif
+    </div>
+    @php session()->forget('messageType') @endphp
+    @endif
+
+
     <div class="containereditUser">
         <h1>Editar Filme:</h1>
         <form method="post" action="{{ route('updateUser', $user->id) }}">

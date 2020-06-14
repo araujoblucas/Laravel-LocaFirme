@@ -20,6 +20,7 @@ class adminController extends Controller
         $user = DB::table('users')->where('email', '=', $request->email)->first();
 
         if($user->role != 'admin') {
+            session()->put('messageType', 'aviso');
             session()->put('message', 'Você não é um administrador!');
             return view('admin.login');
         }
@@ -27,6 +28,7 @@ class adminController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->route('indexMovieView');
         } else {
+            session()->put('messageType', 'erro');
             session()->put('message', 'Dados incorretos');
             return view('admin.login');
         }
@@ -58,6 +60,10 @@ class adminController extends Controller
                 'rented' => 0
             ],
         );
+        if($sucess && $idMovie){
+            session()->put('messageType', 'sucesso');
+            session()->put('messageType', 'Olha só, mais um filme no nosso acervo o/');
+        }
         return redirect()->route('indexMovieView');
     }
 
@@ -113,6 +119,9 @@ class adminController extends Controller
 
     public function delete($id) {
         DB::table('movies')->where('id', '=', $id)->delete();
+
+        session()->put('messageType', 'sucesso');
+        session()->put('message', 'Finalmente deletamos esse filme... ufa!');
         return redirect()->route('indexMovieView');
     }
 
@@ -166,12 +175,15 @@ class adminController extends Controller
             'role' => $request->role,
             'email' => $request->email
         ]);
+        session()->put('messageType', 'sucesso');
+        session()->put('message', 'Dados Atualizados!');
         return redirect()->route('listUsers');
     }
 
     public function deleteUser($id){
         $delete = DB::table('users')->where('id', '=', $id)->delete();
-
+        session()->put('messageType', 'sucesso');
+        session()->put('messageType', 'Usuário Deletado!');
         return redirect()->route('listUsers');
     }
 }

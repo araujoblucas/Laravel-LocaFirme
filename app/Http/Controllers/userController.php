@@ -37,9 +37,11 @@ class userController extends Controller
 
 
         if(!$tryRegister) {
+            session()->put('messageType', "erro");
             session()->put('message', "Algo muito ruim aconteceu e tu vais ter que fazer tudo novamente. :/");
             return redirect()->route('userRegister');
         }
+        session()->put('messageType', "sucesso");
         session()->put('message', "Bem vindo ao LocaFirme, você é um dos nossos agora!. :D");
         return redirect()->route('userLogin');
     }
@@ -52,6 +54,12 @@ class userController extends Controller
                 'password' => Hash::make($request->password),
             ],
         );
+        if(!$affected) {
+            session()->put('messageType', 'erro');
+            session()->put('message', 'Não conseguimos finalizar, tente novamente consagrado.');
+        }
+        session()->put('messageType', 'sucesso');
+        session()->put('message', 'Teu cadastro ta atualizado ;)');
 
         return redirect()->route('userProfile');
     }

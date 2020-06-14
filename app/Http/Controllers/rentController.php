@@ -10,7 +10,9 @@ class rentController extends Controller
 {
     public function rent() {
         if(!Auth::check()) {
-            return route('userLogin');
+            session()->put('messageType', "aviso");
+            session()->put('message', "Precisa estar logado para finalizar meu parça");
+            return redirect()->route('userLogin');
         }
 
         $user = auth()->user()->id;
@@ -49,7 +51,8 @@ class rentController extends Controller
             }
         }
         if($sucessCounter == $count){
-            session()->put('message', "a");
+            session()->put('messageType', 'sucesso');
+            session()->put('message', "Valeu pela confiança!");
         }
         session()->forget('cart');
         return redirect()->route('home');

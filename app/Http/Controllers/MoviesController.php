@@ -8,7 +8,6 @@ use App\movie;
 use App\cart;
 use App\likes;
 
-
 class MoviesController extends Controller
 {
     public function index() {
@@ -60,7 +59,8 @@ class MoviesController extends Controller
 
         $request->session()->put('cart', $cart);
 
-        session()->put('message', "Filme Adicionado ao carrinho!");
+        session()->put('messageType', "sucesso");
+        session()->put('message', "Colocamos no teu carrinho já!");
         return redirect()->route('home');
     }
 
@@ -81,16 +81,9 @@ class MoviesController extends Controller
 
         $request->session()->put('cart', $cart);
 
+        session()->put('messageType', "sucesso");
         session()->put('message', "Removido com sucesso ao carrinho!");
         return redirect()->route('listCart');
-    }
-    public function buy_cart(){
-        if (Auth::check()) {
-            $dados = auth()->user()->name;
-        } else {
-            $dados = "Visitante";
-        }
-        return view('buy_cart', ['dados' => $dados]);
     }
 
     public function giveLike($movie_id){
@@ -113,7 +106,7 @@ class MoviesController extends Controller
                 ]
             );
             DB::table('movies')->where('id', '=', $movie_id)->increment('likes');
-
+            session()->put('messageType', "sucesso");
             session()->put('message', "Filme curtido!");
             return redirect()->route('home');
         }
@@ -129,7 +122,7 @@ class MoviesController extends Controller
         )->delete();
 
         DB::table('movies')->where('id', '=', $movie_id)->decrement('likes');
-
+        session()->put('messageType', "sucesso");
         session()->put('message', "Filme descurtido!");
         return redirect()->back();
     }
@@ -239,7 +232,6 @@ class MoviesController extends Controller
         } else {
             $userName = "Visitante";
         }
-
 
         return view('index', [
             'title' => "Filmes de Suspense",
