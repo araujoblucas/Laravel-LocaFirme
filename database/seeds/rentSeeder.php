@@ -16,15 +16,15 @@ class rentSeeder extends Seeder
             'movie_id' => 1,
             'user_id' => 1,
             'status' => 'alugado',
-            'returnDate' => 0,
-            'rentDate' => 0,
+            'returnDate' => now()->addDays(3),
+            'rentDate' => now(),
         ]);
         DB::table('rents')->insert([
             'movie_id' => 1,
             'user_id' => 2,
             'status' => 'alugado',
-            'returnDate' => 0,
-            'rentDate' => 0,
+            'returnDate' => now()->addDays(3),
+            'rentDate' => now(),
         ]);
     }
 }

@@ -32,6 +32,9 @@ class MoviesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('rents');
+        Schema::dropIfExists('likes');
+        Schema::dropIfExists('stock');
         Schema::dropIfExists('movies');
     }
 }

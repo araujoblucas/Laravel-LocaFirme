@@ -56,8 +56,8 @@ class moviesSeeder extends Seeder
         DB::table('movies')->insert([
             'id' => 5,
             'name' => '5 Onda',
-            'info' => 'epois da primeira onda, só restou a escuridão. Depois da segunda onda, somente os que tiveram sorte sobreviveram. Depois da terceira onda, somente os que não tiveram sorte sobreviveram. Depois da quarta onda, só há uma regra: não confie em ninguém. Agora A QUINTA ONDA está começando... Cassie está sozinha, fugindo dos Outros. Ela vive em uma Terra devastada, onde qualquer pessoa, até mesmo uma criança, pode ser o inimigo.',
-            'image' => 'https://a-static.mlcdn.com.br/618x463/5-onda-a-capa-do-filme-02-ed-fundamento/apaginadistribuidoradelivros/9788539513642/2abcfc0c71b8b671f45aac2f57bbebd0.jpg',
+            'info' => 'Depois da primeira onda, só restou a escuridão. Depois da segunda onda, somente os que tiveram sorte sobreviveram. Depois da terceira onda, somente os que não tiveram sorte sobreviveram. Depois da quarta onda, só há uma regra: não confie em ninguém. Agora A QUINTA ONDA está começando... Cassie está sozinha, fugindo dos Outros. Ela vive em uma Terra devastada, onde qualquer pessoa, até mesmo uma criança, pode ser o inimigo.',
+            'image' => 'https://a-static.mlcdn.com.br/1500x1500/5-onda-a-capa-filme-fundamento-editora-fundamento-educacional-ltda/livrariascuritiba1/lv391785/ad196f3962b402d120d7b3e81094deaf.jpg',
             'likes' => 0,
             'genre' => 'suspense, horror',
             'year' => 2013,
