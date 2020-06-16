@@ -29,6 +29,19 @@
     @php session()->forget('messageType') @endphp
     @endif
 
+
+
+    <div class="containerSearch">
+        <form action="{{ route('search') }}">
+            <input name="search" class="ls-select" />
+            <select name="typeSearch" class="ls-select">
+                <option value="name">Nome</option>
+                <option value="genre">Genero</option>
+            </select>
+            <button type="submit">Pesquisar</button>
+        </form>
+    </div>
+
     <div class="containerFlex">
         @foreach ($movies as $movie)
             <div class="box-info">
@@ -109,7 +122,14 @@
     .center {
         display: flex;
         width:100%;
-
         justify-content: center;
+    }
+    .containerSearch{
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        margin-right: 30px;
+        margin: 30px;
+
     }
 </style>

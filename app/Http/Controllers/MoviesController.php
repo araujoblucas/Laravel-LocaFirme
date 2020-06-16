@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\movie;
 use App\cart;
 use App\likes;
+use Facade\Ignition\QueryRecorder\Query;
 
 class MoviesController extends Controller
 {
@@ -237,6 +238,35 @@ class MoviesController extends Controller
 
         return view('index', [
             'title' => "Filmes de Suspense",
+            'movies' => $movies,
+            'userName' => $userName,
+            'user_likes' => $likes]);
+    }
+
+    public function search(Request $request) {
+
+        $movies = DB::table('movies')
+        ->join('stock', 'movies.id', '=', 'stock.movie_id')
+        ->select('movies.*', 'stock.qnt', 'stock.available')
+        ->where('movies.'.$request->typeSearch, 'like', '%'.$request->search.'%')
+        ->paginate(6);
+        $likes = array();
+        if (Auth::check()) {
+            $userName = auth()->user()->name;
+            $allLikes = DB::table('likes')
+            ->where('user_id', '=', auth()->user()->id)
+            ->select('movie_id')->get();
+
+            foreach ($allLikes as $like) {
+                $likes[] = $like->movie_id;
+            }
+        } else {
+            $userName = "Visitante";
+        }
+
+
+        return view('index', [
+            'title' => "Pesquisa por ".$request->search,
             'movies' => $movies,
             'userName' => $userName,
             'user_likes' => $likes]);

@@ -41,8 +41,9 @@ Route::get('/login/like/{id}', 'MoviesController@giveLike')->middleware('userAut
 Route::get('/login/removeLike/{id}', 'MoviesController@removeLike')->middleware('userAuth')->name('removeLike');
 Route::get('/admin/login', 'adminController@adminLogin')->name('adminLogin');
 Route::post('/admin/login', 'adminController@adminLoginPost')->name('adminLoginPost');
-Route::get('/rent/', 'rentController@rent')->name('rent');
 Route::get('/returnMovie/{id}', 'rentController@returnMovie')->name('returnMovie');
+Route::get('/rent', 'rentController@rent')->name('rent');
+Route::get('/search', 'MoviesController@search')->name('search');
 
 
 Route::prefix('admin')->middleware('adminAuth')->group(function () {
