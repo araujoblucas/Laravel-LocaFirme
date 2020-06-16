@@ -74,8 +74,11 @@
                 </div>
             </div>
         @endforeach
-
     </div>
+    <div class="center">
+        {{ $movies->links() }}
+    </div>
+
 </body>
 
 <style>
@@ -102,5 +105,11 @@
     }
     .inactive {
         opacity: .5 !important;
+    }
+    .center {
+        display: flex;
+        width:100%;
+
+        justify-content: center;
     }
 </style>

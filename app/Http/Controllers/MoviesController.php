@@ -13,7 +13,7 @@ class MoviesController extends Controller
     public function index() {
         $movies = DB::table('movies')
         ->join('stock', 'movies.id', '=', 'stock.movie_id')
-        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        ->select('movies.*', 'stock.qnt', 'stock.available')->paginate(6);
         $likes = array();
         if (Auth::check()) {
             $userName = auth()->user()->name;
@@ -137,7 +137,7 @@ class MoviesController extends Controller
         $movies = DB::table('movies')
         ->orderBy('likes', 'desc')
         ->join('stock', 'movies.id', '=', 'stock.movie_id')
-        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        ->select('movies.*', 'stock.qnt', 'stock.available')->paginate(6);
         $likes = array();
         if (Auth::check()) {
             $userName = auth()->user()->name;
@@ -165,7 +165,7 @@ class MoviesController extends Controller
         ->orderBy('likes', 'desc')
         ->join('stock', 'movies.id', '=', 'stock.movie_id')
         ->where('genre', 'like', '%comedy%')
-        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        ->select('movies.*', 'stock.qnt', 'stock.available')->paginate(6);
         $likes = array();
         if (Auth::check()) {
             $userName = auth()->user()->name;
@@ -193,7 +193,7 @@ class MoviesController extends Controller
         $movies = DB::table('movies')->orderBy('likes', 'desc')
         ->join('stock', 'movies.id', '=', 'stock.movie_id')
         ->where('genre', 'like', '%horror%')
-        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        ->select('movies.*', 'stock.qnt', 'stock.available')->paginate(6);
         $likes = array();
         if (Auth::check()) {
             $userName = auth()->user()->name;
@@ -220,7 +220,7 @@ class MoviesController extends Controller
         ->orderBy('likes', 'desc')
         ->join('stock', 'movies.id', '=', 'stock.movie_id')
         ->where('genre', 'like', '%suspense%')
-        ->select('movies.*', 'stock.qnt', 'stock.available')->get();
+        ->select('movies.*', 'stock.qnt', 'stock.available')->paginate(6);
         $likes = array();
         if (Auth::check()) {
             $userName = auth()->user()->name;
