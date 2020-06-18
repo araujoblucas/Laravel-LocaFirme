@@ -7,79 +7,27 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## Características do LocaFirme
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Esse projeto foi criado e desenvolvido para aprendizado do Laravel, framework de php.
+Este projeto tem as seguintes características:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   Para controle de likes em abas e não ter problema de dar dois likes, fiz um condicional que quando você curte ou já curte algo muda o botão para um “dislike”, caso mande um like em cada aba, ele vai ignorar a segunda chamada e retornar a index.
+-	As contas admin, podem alugar filmes e fazer tudo que um “user” comum pode.
+-	Três tipos de usuários: 
+    -	Convidado (não logado): podem colocar filmes no carrinho;
+    -	Users: podem colocar itens no carrinho, dar likes, listar filmes alugados, editar algumas informações da conta;
+    -	Admin: podem listar e editar usuários, podem remover, adicionar, editar e listar filmes, podem também ver os likes de cada filme;
+-	Só pode ter uma unidade de cada filme no carrinho
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Algumas coisas que me chamaram a atenção ou que eu aprendi com este projeto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   Na index.blade, descobri o @auth e @guest, que são “partes” ou seções do código que só aparecerão seus conteúdos para um usuário que estiver logado ou não estiver logado “convidado”, isso ajuda muito na organização e legibilidade do código.
+-	Foram criadas migrations e seeds, para o banco de dados utilizei o Laragon.
+-	Foi criado um schedule que executa um comando que verifica se a data de entrega é no dia atual e se for, ele atualiza o status para devolvido, e incrementa no banco a disponibilidade e decrementa o número de alugados.
+-	A verificação de logado e se o logado é admin, é feito através de middlewares, uma chamada userAuth que verifica se está logado, e quando é requerido a autorização de admin, é usada a adminAuth que verifica se o usuário é um admin.
+-	Para as páginas com filtros e ordenação dos filmes, como por exemplo, “comedia”, “mais curtidos”, “horror”, todas utilizam a mesma página index(como um Template) onde o que muda é a rota que chama uma função que passa parâmetros diferentes para o frontend.
+-	Para a construção do front eu utilizei o Locaweb Style, documentação ótima e com componentes bem bacanas, segue o link
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-
-### Community Sponsors
-
-<a href="https://op.gg"><img src="http://opgg-static.akamaized.net/icon/t.rectangle.png" width="150"></a>
-
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [云软科技](http://www.yunruan.ltd/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
