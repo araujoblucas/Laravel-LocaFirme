@@ -28,6 +28,5 @@ Este projeto tem as seguintes características:
 -	Foi criado um schedule que executa um comando que verifica se a data de entrega é no dia atual e se for, ele atualiza o status para devolvido, e incrementa no banco a disponibilidade e decrementa o número de alugados.
 -	A verificação de logado e se o logado é admin, é feito através de middlewares, uma chamada userAuth que verifica se está logado, e quando é requerido a autorização de admin, é usada a adminAuth que verifica se o usuário é um admin.
 -	Para as páginas com filtros e ordenação dos filmes, como por exemplo, “comedia”, “mais curtidos”, “horror”, todas utilizam a mesma página index(como um Template) onde o que muda é a rota que chama uma função que passa parâmetros diferentes para o frontend.
--	Para a construção do front eu utilizei o Locaweb Style, documentação ótima e com componentes bem bacanas, segue o link
-
-
+-	Para a construção do front eu utilizei o Locaweb Style, documentação ótima e com componentes bem bacanas, segue o [link](http://opensource.locaweb.com.br/locawebstyle/)
+-   Descobri o heroku e coloquei o projeto lá, adicionei os add-ons clearDB e Herolu Postgres. [Link para o Projeto no Heroku](https://locafirme.herokuapp.com/)
